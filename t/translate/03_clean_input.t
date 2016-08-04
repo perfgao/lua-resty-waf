@@ -3,13 +3,13 @@ use Test::More;
 use lib 'tools';
 use Modsec2LRW qw(clean_input);
 
-my $basic = q/SecRule ARGS "foo" "id:12345,pass"/;
-my $trim_left = q/	SecRule ARGS "foo" "id:12345,pass"/;
-my $trim_right = q/SecRule ARGS "foo" "id:12345,pass"	/;
-my $trim_both = q/	SecRule ARGS "foo" "id:12345,pass"	/;
-my $ignore_comment = q/#SecRule ARGS "foo" "id:12345,pass"/;
+my $basic             = q/SecRule ARGS "foo" "id:12345,pass"/;
+my $trim_left         = q/	SecRule ARGS "foo" "id:12345,pass"/;
+my $trim_right        = q/SecRule ARGS "foo" "id:12345,pass"	/;
+my $trim_both         = q/	SecRule ARGS "foo" "id:12345,pass"	/;
+my $ignore_comment    = q/#SecRule ARGS "foo" "id:12345,pass"/;
 my $invalid_directive = q/Secrule ARGS "foo" "id:12345,pass"/;
-my $multi_line = q/
+my $multi_line        = q/
 SecRule \
 	ARGS \
 	"foo" \
