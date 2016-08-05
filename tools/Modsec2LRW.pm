@@ -234,9 +234,13 @@ sub tokenize {
 	# and strip it from the input line
 	while ($line =~ $re_quoted || $line =~ $re_unquoted) {
 		my $token = $1;
-		push @tokens, $token;
 		$line =~ s/"?\Q$token\E"?//;
 		$line =~ s/^\s*//;
+
+		# remove any escaping backslashes from escaped quotes
+		# e.g. "foo \" bar" becomes literal 'foo " bar'
+		$token =~ s/\\"/"/g;
+		push @tokens, $token;
 	}
 
 	return @tokens;
