@@ -14,7 +14,7 @@ services:
     - memcached
     - redis
 install:
-    - cpanm -v --notest Test::Nginx Test::More Exporter::Declare
+    - cpanm -v --notest Test::Nginx Test::More Exporter::Declare Test::Exception Test::MockModule;
 before_script:
     - sudo apt-get update -q
     - sudo apt-get install libssl-dev lua5.1 -y
