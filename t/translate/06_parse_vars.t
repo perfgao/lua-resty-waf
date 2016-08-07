@@ -5,9 +5,8 @@ use Modsec2LRW qw(parse_vars);
 
 my @out;
 
-@out = parse_vars('ARGS');
 is_deeply(
-	@out,
+	parse_vars('ARGS'),
 	[
 		{
 			variable => 'ARGS',
@@ -17,9 +16,8 @@ is_deeply(
 	'single var, no modifier or specific'
 );
 
-@out = parse_vars('ARGS:foo');
 is_deeply(
-	@out,
+	parse_vars('ARGS:foo'),
 	[
 		{
 			variable => 'ARGS',
@@ -29,9 +27,8 @@ is_deeply(
 	'single var with specific element'
 );
 
-@out = parse_vars('!ARGS:foo');
 is_deeply(
-	@out,
+	parse_vars('!ARGS:foo'),
 	[
 		{
 			variable => 'ARGS',
@@ -42,9 +39,8 @@ is_deeply(
 	'single var with specific element and negative modifier'
 );
 
-@out = parse_vars('&ARGS');
 is_deeply(
-	@out,
+	parse_vars('&ARGS'),
 	[
 		{
 			variable => 'ARGS',
@@ -55,9 +51,8 @@ is_deeply(
 	'single var with counting modifier'
 );
 
-@out = parse_vars('&ARGS:foo');
 is_deeply(
-	@out,
+	parse_vars('&ARGS:foo'),
 	[
 		{
 			variable => 'ARGS',
@@ -68,9 +63,8 @@ is_deeply(
 	'single var with specific element and counting modifier'
 );
 
-@out = parse_vars('ARGS:foo:bar');
 is_deeply(
-	@out,
+	parse_vars('ARGS:foo:bar'),
 	[
 		{
 			variable => 'ARGS',
@@ -80,9 +74,8 @@ is_deeply(
 	'single var with specific element containing colon'
 );
 
-@out = parse_vars('ARGS|ARGS_NAMES');
 is_deeply(
-	@out,
+	parse_vars('ARGS|ARGS_NAMES'),
 	[
 		{
 			variable => 'ARGS',
@@ -96,9 +89,8 @@ is_deeply(
 	'two single elements, no modifiers'
 );
 
-@out = parse_vars('ARGS:foo|ARGS_NAMES');
 is_deeply(
-	@out,
+	parse_vars('ARGS:foo|ARGS_NAMES'),
 	[
 		{
 			variable => 'ARGS',
@@ -112,9 +104,8 @@ is_deeply(
 	'two single elements, one specific element'
 );
 
-@out = parse_vars('ARGS:foo|ARGS_NAMES:bar');
 is_deeply(
-	@out,
+	parse_vars('ARGS:foo|ARGS_NAMES:bar'),
 	[
 		{
 			variable => 'ARGS',
@@ -128,9 +119,8 @@ is_deeply(
 	'two single elements, two specific elements'
 );
 
-@out = parse_vars('&ARGS:foo|ARGS_NAMES');
 is_deeply(
-	@out,
+	parse_vars('&ARGS:foo|ARGS_NAMES'),
 	[
 		{
 			variable => 'ARGS',
@@ -145,9 +135,8 @@ is_deeply(
 	'two single elements, one modifier and one specific element'
 );
 
-@out = parse_vars('ARGS:foo|&ARGS_NAMES');
 is_deeply(
-	@out,
+	parse_vars('ARGS:foo|&ARGS_NAMES'),
 	[
 		{
 			variable => 'ARGS',
@@ -162,9 +151,8 @@ is_deeply(
 	'two single elements, one modifier, the other with specific element'
 );
 
-@out = parse_vars('ARGS:/foo/');
 is_deeply(
-	@out,
+	parse_vars('ARGS:/foo/'),
 	[
 		{
 			variable => 'ARGS',
@@ -174,9 +162,8 @@ is_deeply(
 	'single element with regex specific'
 );
 
-@out = parse_vars("ARGS:'/foo/'");
 is_deeply(
-	@out,
+	parse_vars("ARGS:'/foo/'"),
 	[
 		{
 			variable => 'ARGS',
@@ -186,9 +173,8 @@ is_deeply(
 	'single element with regex specific, quote wrapped'
 );
 
-@out = parse_vars("ARGS:/fo'o/");
 is_deeply(
-	@out,
+	parse_vars("ARGS:/fo'o/"),
 	[
 		{
 			variable => 'ARGS',
@@ -198,9 +184,8 @@ is_deeply(
 	'single element with regex specific, quote in specific'
 );
 
-@out = parse_vars("ARGS:'/fo'o/'");
 is_deeply(
-	@out,
+	parse_vars("ARGS:'/fo'o/'"),
 	[
 		{
 			variable => 'ARGS',
@@ -210,9 +195,8 @@ is_deeply(
 	'single element with regex specific, quote wrapped, quote in specific'
 );
 
-@out = parse_vars('ARGS:/fo/o/');
 is_deeply(
-	@out,
+	parse_vars('ARGS:/fo/o/'),
 	[
 		{
 			variable => 'ARGS',
@@ -222,9 +206,8 @@ is_deeply(
 	'single element with regex specific, quote wrapped'
 );
 
-@out = parse_vars("ARGS:'/fo/o/'");
 is_deeply(
-	@out,
+	parse_vars("ARGS:'/fo/o/'"),
 	[
 		{
 			variable => 'ARGS',
@@ -234,9 +217,8 @@ is_deeply(
 	'single element with regex specific, quote wrapped, slash in specific'
 );
 
-@out = parse_vars('ARGS:/foo|bar/');
 is_deeply(
-	@out,
+	parse_vars('ARGS:/foo|bar/'),
 	[
 		{
 			variable => 'ARGS',
@@ -246,9 +228,8 @@ is_deeply(
 	'single element with regex specific containing pipe'
 );
 
-@out = parse_vars("ARGS:'/foo|bar/'");
 is_deeply(
-	@out,
+	parse_vars("ARGS:'/foo|bar/'"),
 	[
 		{
 			variable => 'ARGS',
@@ -258,9 +239,8 @@ is_deeply(
 	'single element with regex specific containing pipe, quote wrapped'
 );
 
-@out = parse_vars('ARGS:/foo/|ARGS_NAMES');
 is_deeply(
-	@out,
+	parse_vars('ARGS:/foo/|ARGS_NAMES'),
 	[
 		{
 			variable => 'ARGS',
@@ -274,9 +254,8 @@ is_deeply(
 	'two elements, one with regex specific'
 );
 
-@out = parse_vars("ARGS:'/foo/'|ARGS_NAMES");
 is_deeply(
-	@out,
+	parse_vars("ARGS:'/foo/'|ARGS_NAMES"),
 	[
 		{
 			variable => 'ARGS',
@@ -290,9 +269,8 @@ is_deeply(
 	'two elements, one with regex specific, quote wrapped'
 );
 
-@out = parse_vars("ARGS:/fo'o/|ARGS_NAMES");
 is_deeply(
-	@out,
+	parse_vars("ARGS:/fo'o/|ARGS_NAMES"),
 	[
 		{
 			variable => 'ARGS',
@@ -306,9 +284,8 @@ is_deeply(
 	'two elements, one with regex specific, quote in specific'
 );
 
-@out = parse_vars("ARGS:'/fo'o/'|ARGS_NAMES");
 is_deeply(
-	@out,
+	parse_vars("ARGS:'/fo'o/'|ARGS_NAMES"),
 	[
 		{
 			variable => 'ARGS',
@@ -322,9 +299,8 @@ is_deeply(
 	'two elements, one with regex specific, quote wrapped, quote in specific'
 );
 
-@out = parse_vars('ARGS:/fo/o/|ARGS_NAMES');
 is_deeply(
-	@out,
+	parse_vars('ARGS:/fo/o/|ARGS_NAMES'),
 	[
 		{
 			variable => 'ARGS',
@@ -338,9 +314,8 @@ is_deeply(
 	'two elements, one with regex specific, slash in specific'
 );
 
-@out = parse_vars("ARGS:'/fo/o/'|ARGS_NAMES");
 is_deeply(
-	@out,
+	parse_vars("ARGS:'/fo/o/'|ARGS_NAMES"),
 	[
 		{
 			variable => 'ARGS',
@@ -354,9 +329,8 @@ is_deeply(
 	'two elements, one with regex specific, quote wrapped, slash in specific'
 );
 
-@out = parse_vars('ARGS:/foo|bar/|ARGS_NAMES');
 is_deeply(
-	@out,
+	parse_vars('ARGS:/foo|bar/|ARGS_NAMES'),
 	[
 		{
 			variable => 'ARGS',
@@ -370,9 +344,8 @@ is_deeply(
 	'two elements, one with regex specific containing pipe'
 );
 
-@out = parse_vars("ARGS:'/foo|bar/'|ARGS_NAMES");
 is_deeply(
-	@out,
+	parse_vars("ARGS:'/foo|bar/'|ARGS_NAMES"),
 	[
 		{
 			variable => 'ARGS',
@@ -386,9 +359,8 @@ is_deeply(
 	'two elements, one with regex specific containing pipe, quote wrapped'
 );
 
-@out = parse_vars("REQUEST_HEADERS:'/(Content-Length|Transfer-Encoding)/'");
 is_deeply(
-	@out,
+	parse_vars("REQUEST_HEADERS:'/(Content-Length|Transfer-Encoding)/'"),
 	[
 		{
 			variable => 'REQUEST_HEADERS',
