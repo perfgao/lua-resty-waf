@@ -12,25 +12,17 @@ $Mock->mock(translate_chain => sub {
 	my @chain  = @{$args->{chain}};
 	my $silent = $args->{silent};
 	my $force  = $args->{force};
-	my $path   = $args->{path};
-
-	my @return;
 
 	# mock a case where we would die
 	for my $rule (@chain) {
 		die 'translate_chain died a mocking death'
 			if $rule->{mockdie};
 
-		if ($rule->{mockfail}) {
-			next if $force;
-
-			die 'translate_chain died a translation death';
-		}
-
-		push @return, $rule;
+		die 'translate_chain died a translation death'
+			if $rule->{mockfail} && !$force;
 	}
 
-	return @return;
+	return @chain;
 });
 
 $Mock->mock(figure_phase => sub {
@@ -219,32 +211,27 @@ is_deeply(
 		chains => [
 			[
 				{
-					id    => '12345',
-					foo   => 'bar',
-					phase => 'access',
+					id       => '12345',
+					foo      => 'bar',
+					phase    => 'access',
+					original => 'original 12345'
 				},
 				{
 					id       => '12346',
 					foo      => 'bar',
 					phase    => 'access',
 					mockfail => 1,
+					original => 'original 12346'
 				},
 			]
 		],
-		force => 1
 	}),
 	{
-		access => [
-			{
-				id    => '12345',
-				foo   => 'bar',
-				phase => 'access',
-			}
-		],
+		access        => [],
 		header_filter => [],
 		body_filter   => [],
 	},
-	'a chain with two rules does not die when force is set'
+	'a chain with two rules does not add to the final output when it dies'
 );
 
 TODO: {
